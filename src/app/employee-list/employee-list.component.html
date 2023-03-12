@@ -1,0 +1,438 @@
+
+
+
+<div class="container">
+    <div class=" mt20 mb20">
+        <button mat-stroked-button color="primary" class="mt20 mb20"
+        [routerLink]="['/admin']"><mat-icon>arrow_back</mat-icon> Back
+        </button>
+    </div>
+    <div class="container text-center mt20 mb20">
+        <button mat-stroked-button color="primary"><h1> Employee List</h1></button>
+    </div>
+    
+    <br>
+    <div class="row">
+        <div id="custom-search-input">
+            <div class="input-group col-md-12" style="text-align: center">
+                <input type="text" class="search-query form-control" placeholder="Search With FirstName" [(ngModel)] = "firstName" name = "firstName" />
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button" (click)= "findUserByFirstName()">
+                        <span ><i class="fa fa-search"></i></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 btn-add" >
+        <button class=" btn btn-primary" (click)= " openCreate(contentCreate) ">
+            <a class="icon_user" ><i class="fa fa-user-plus"> New Employee</i></a>
+        </button>
+       
+    </div>
+<table class="table table-striped">
+    <thead>
+        <tr >
+            <th>ID</th>
+            <th>User Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <!-- <th>Role</th> -->
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let employee of employees | paginate:{
+            itemsPerPage: pageSize,
+            currentPage: page,
+            totalItems: count };
+            let i = index
+            " 
+            [class.active]="i == currentIndex"
+             >
+            <td>    {{employee.id}}</td>
+            <td> {{employee.userName}} </td>
+            <td> {{employee.firstName}} </td>
+            <td> {{employee.lastName}} </td>
+            <td> {{employee.fullName}} </td>
+            <td> {{employee.email}} </td>
+            <!-- <td> {{user.authorities[0].authority}} </td> -->
+            <td>
+                <button  class="btn btn-info"><i class="fa fa-eye" (click) = "clickOpenDetails(contentdetails , employee)"></i></button>
+                <button  class="btn btn-info"><i class="fa fa-pencil-square-o" (click) = "clickOpenUpdate(contentupdate , employee)" ></i></button>
+                <button  class="btn btn-danger"><i class="fa fa-trash-o" (click)="clickOpenDelete(contentDelete, employee)"></i></button>
+            </td>
+        </tr>
+        <div class=" container " *ngIf="employees.length==0">
+            <div class="tex-center">
+                <h1>Không có dữ liệu</h1>
+            </div>
+           
+        </div>
+    </tbody>
+    
+</table>
+
+<div class="col-md-12">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      [responsive]="true"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+  </div>
+
+  <div class="mt-3">
+    Items per Page:
+    <select (change)="handlePageSizeChange($event)">
+      <option *ngFor="let size of pageSizes" [ngValue]="size">
+        {{ size }}
+      </option>
+    </select>
+  </div>
+
+ <!-- Create Employee -->
+<ng-template #contentCreate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Employee</h4>
+      <button type="button" class="btn-close" 
+      data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+        {{employeee | json}}
+      <form   (ngSubmit) = " onSubmit()"  >
+        
+        <div class="form-group">
+            <label>User Name:</label>
+            <input type="text" class="form-control" id ="userName" [formControl]="userNameValidator"
+             minlength="6" maxlength="16"
+            [(ngModel)] = "employeee.userName" name = "userName">
+            <div class="red_required" *ngIf="userNameValidator.invalid">{{getErrorMessageUserName()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" class="form-control" id ="password" [formControl]="passwordValidator"
+            minlength="4"  maxlength="12"
+            [(ngModel)] = "employeee.password" name = "password">
+            <div class="red_required" *ngIf="passwordValidator.invalid">{{getErrorMessagePassword()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label> Tên:</label>
+            <input type="text" class="form-control" id ="firstName" [formControl]="name"
+            [(ngModel)] = "employeee.firstName" name = "firstName" #inputfirstName >
+            <div class="red_required" *ngIf="name.invalid">{{getErrorMessageFirstName()}}</div>
+            <mat-hint align="end">{{inputfirstName.value?.length || 0}}/20</mat-hint>
+        </div>
+    
+        <div class="form-group">
+            <label>Họ:</label>
+            <input type="text" class="form-control" id="lastName"  
+            [(ngModel)] = "employeee.lastName" name = "lastName" #inputlastName [formControl]="lastname">
+            <div class="red_required" *ngIf="lastname.invalid">{{getErrorMessageLastName()}}</div>
+            <mat-hint align="end">{{inputlastName.value?.length || 0}}/20</mat-hint>
+        </div>
+
+        <div class="form-group">
+            <label>Họ Và Tên:</label>
+            <input type="text" class="form-control" id="fullName" 
+            [(ngModel)] = "employeee.fullName" name = "fullName" #inputfulltName [formControl]="fullname">
+            <div class="red_required" *ngIf="fullname.invalid">{{getErrorMessageFullName()}}</div>
+            <mat-hint align="end">{{inputfulltName.value?.length || 0}}/50</mat-hint>
+        </div>
+
+        <div class="form-group">
+            <label>Ngày Sinh:</label>
+            <input type="date" class="form-control" id="birthday" [formControl]="dob" 
+            [(ngModel)] = "employeee.birthday" name = "birthday" min="1997-01-01" max="2003-12-31">
+            <div class="red_required" *ngIf="dob.invalid">{{getErrorMessageDate()}}</div>
+        </div>
+
+        <div class="form-group">
+            <label>Giới Tính:</label>
+             <select  class="form-select" [(ngModel)]="employeee.sex" id="sex" name = "sex">
+                <option selected >Khác</option>
+                <option *ngFor="let gender of genders" [value]="gender.id">{{gender.id}}</option>  
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Số Điện Thoại:</label>
+            <input type="text"  class="form-control" id="numberPhone" maxlength="10"
+            [(ngModel)] = "employeee.phone" name = "numberPhone" [formControl]="phone">
+            <div class="red_required" *ngIf="phone.invalid">{{getErrorMessageNumberPhone()}}</div>
+        </div>
+        
+        <!-- <div class="form-group">
+            <label>CCCD/CMND:</label>
+            <input type="number" class="form-control" id="indentity_Card" #inputcmnd 
+            [(ngModel)] = "employeee.indentity_Card" name = "indentity_Card" [formControl]="CCCD">
+            <mat-hint align="end">{{inputcmnd.value?.length || 0}}/12</mat-hint>
+            <div class="red_required" *ngIf="CCCD.invalid">{{getErrorMessageCCCD()}}</div>
+        </div> -->
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="text" class="form-control" id="email"
+            [(ngModel)] = "employeee.email" name = "email" [formControl]="emailValidator">
+            <div class="red_required" *ngIf="emailValidator.invalid">{{getErrorMessage()}}</div>
+        </div>
+    
+        <div class="form-group">
+            <label>Địa Chỉ:</label>
+            <input type="text" class="form-control" id="address" [formControl]="address"
+            [(ngModel)] = "employeee.address" name = "address" #inputaddress >
+            <mat-hint align="end">{{inputaddress.value?.length || 0}}/60</mat-hint>
+            <div class="red_required" *ngIf="address.invalid">{{getErrorMessageAddress()}}</div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit"
+          [disabled]="!userNameValidator.valid || !passwordValidator.valid ||
+           !emailValidator.valid || !phone.valid || !name.valid || !lastname.valid ||!fullname.valid || !dob.valid" 
+          (click)="modal.close('Save click')">Thêm</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+
+ <!-- Details Employee -->
+ <ng-template #contentdetails let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">View Details Employee</h4>
+      <button type="button" class="btn-close" 
+      data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+                <div class="row container d-flex justify-content-center">
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card user-card-full">
+                            <div class="row m-l-0 m-r-0">
+                                <div class="col-sm-4 bg-c-lite-green user-profile">
+                                    <div class="card-block text-center text-white">
+                                        <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                        <h6 class="f-w-600"> </h6>
+                                        <p>Web Designer</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="card-block">
+                                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">INFORMATION</h6>
+                                            <form [formGroup] = "detailsForm" novalidate>
+                                                <div class="row">
+                                                    <div class="col-sm-5 form-group">
+                                                        <p class="m-b-10 f-w-600">User Name:</p>
+                                                        <input type="text" class="form-control f-w-400" 
+                                                        formControlName = "userName" readonly>
+                                                    </div>
+
+                                                    <!-- <div class="col-sm-5 form-group">
+                                                        <p class="m-b-10 f-w-600">Password:</p>
+                                                        <input type="text" class="form-control f-w-400" 
+                                                        formControlName = "password" readonly>
+                                                    </div> -->
+
+                                                    <div class="col-sm-5 form-group">
+                                                        <p class="m-b-10 f-w-600">Tên:</p>
+                                                        <input type="text" class="form-control f-w-400" 
+                                                        formControlName = "firstName" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-7 form-group">
+                                                        <p class="m-b-10 f-w-600">Họ:</p>
+                                                        <input type="text" class="form-control f-w-400" 
+                                                        formControlName = "lastName" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-7 form-group">
+                                                        <p class="m-b-10 f-w-600">Họ và Tên:</p>
+                                                        <input type="text" class="form-control f-w-400" 
+                                                        formControlName = "fullName" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-5 form-group">
+                                                        <p class="m-b-10 f-w-600">Ngày Sinh:</p>
+                                                        <input type="text" class="form-control" 
+                                                        formControlName = "birthday" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-5 form-group">
+                                                        <p class="m-b-10 f-w-600">Giới Tính:</p>
+                                                        <input class="form-control" 
+                                                        formControlName = "sex" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-6 form-group">
+                                                        <p class="m-b-10 f-w-600">Số Điện Thoại:</p>
+                                                        <input type="number" class="form-control" 
+                                                        formControlName ="phone" readonly>
+                                                    </div>
+
+                                                    <!-- <div class="col-sm-6 form-group">
+                                                        <p class="m-b-10 f-w-600">CCCD/CMND:</p>
+                                                        <input type="number" class="form-control" 
+                                                        formControlName ="indentity_Card" readonly>
+                                                    </div> -->
+
+                                                    <div class="col-sm-7 form-group">
+                                                        <p class="m-b-10 f-w-600">Email:</p>
+                                                        <input type="text" class="form-control" 
+                                                        formControlName = "email" readonly>
+                                                    </div>
+
+                                                    <div class="col-sm-12 form-group">
+                                                        <p class="m-b-10 f-w-600">Địa Chỉ:</p>
+                                                        <input type="text" class="form-control" 
+                                                        formControlName = "address" readonly >
+                                                    </div>
+                                            </div>
+                                        </form>
+                                        
+                                        <p class="b-b-default f-w-600"></p>
+                                        <div class="row">
+                                            <ul class="list_icon">
+                                                <li class="icon_item facebook"><i class="fa fa-facebook-square"></i></li>
+                                                <li class="icon_item twitter"><i class="fa fa-twitter" ></i> </li>
+                                                <li class="icon_item instagram"><i class="fa fa-instagram" ></i></li>
+                                                <li class="icon_item telegram"><i class="fa fa-telegram" ></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="submit" (click)="modal.close('Save click')">Cancle</button>
+        </div>
+    
+  </ng-template>
+
+
+
+   <!-- Update Employee -->
+<ng-template #contentupdate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update Employee</h4>
+      <button type="button" class="btn-close" 
+      data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup] = "editForm" novalidate>
+        
+        <div class="form-group">
+            <label>User Name:</label>
+            <input type="text" class="form-control" readonly
+             formControlName = "userName">
+        </div>
+
+        <!-- <div class="form-group">
+            <label>Password:</label>
+            <input type="text" class="form-control" 
+             formControlName = "password">
+        </div> -->
+
+        <div class="form-group">
+            <label>Tên:</label>
+            <input type="text" class="form-control" 
+             formControlName = "firstName"  maxlength="20">
+             <!-- <div *ngIf=" f.FirstName.errors && (f.FirstName.dirty || f.FirstName.touched)" class="invalid-feedback">
+                <div *ngIf="f.FirstName.errors.required">Tên là bắt buộc</div>
+                <p *ngIf="f.FirstName.errors.pattern">Vui lòng nhập đúng tên</p>
+            </div> -->
+           
+             <!-- <div class="form-control-feedback"
+                *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+                <p *ngIf="firstName.errors.required">Tên là bắt buộc</p>
+                <p *ngIf="firstName.errors.pattern">Vui lòng nhập đúng tên</p>
+            </div> -->
+        </div>
+    
+        <div class="form-group">
+            <label>Họ:</label>
+            <input type="text" class="form-control" 
+            formControlName = "lastName"  >
+        </div>
+
+        <div class="form-group">
+            <label>Họ và Tên:</label>
+            <input type="text" class="form-control" 
+            formControlName = "fullName" maxlength="50">
+            
+        </div>
+
+        <div class="form-group">
+            <label>Ngày Sinh:</label>
+            <input type="date" class="form-control"  
+            formControlName = "birthday" min="1997-01-01" max="2003-12-31">
+            
+        </div>
+
+        <div class="form-group">
+            <label>Giới Tính:</label>
+            <select  class="form-select" [(ngModel)]="employeee.sex" id="sex" formControlName = "sex">
+                <!-- <option selected >Choose gender</option> -->
+                <option  *ngFor="let gender of genders" [value]="gender.id">{{gender.id}}</option>  
+            </select>
+           
+        </div>
+
+        <div class="form-group">
+            <label>Số Điện Thoại:</label>
+            <input type="text" class="form-control" maxlength="10" 
+            formControlName ="phone" >
+        </div>
+        
+        <!-- <div class="form-group">
+            <label>CCCD/CMND:</label>
+            <input type="number" class="form-control" #inputcmnd maxlength=12
+            formControlName ="indentity_Card" >
+            <mat-hint align="end">{{inputcmnd.value?.length || 0}}/12</mat-hint>
+        </div> -->
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="text" class="form-control" 
+            formControlName = "email" >
+        </div>
+    
+        <div class="form-group">
+            <label>Địa Chỉ:</label>
+            <input type="text" class="form-control" 
+            formControlName = "address" >
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit" (click)="onSave()">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <!-- Delte employee -->
+  <ng-template #contentDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirm Delete Employee</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <h6 class="text-center">Bạn có chắc muốn xóa nhân viên này không? </h6>
+    </div>
+    <div class="modal-footer">
+        <button data-dismiss="modal" class="btn btn-danger" (click) = "deleteEmployee()">Yes, Delete!</button> 
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    </div>
+  </ng-template>

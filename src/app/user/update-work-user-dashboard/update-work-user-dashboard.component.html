@@ -1,0 +1,127 @@
+
+
+
+<div class="bootstrap-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" mt20 mb20">
+                <button mat-stroked-button color="primary" class="mt20 mb20"
+                [routerLink]="['/user']"><mat-icon>arrow_back</mat-icon> Back
+                </button>
+            </div>
+            <div class="col-md-6">
+                <div class="container text-center mt20">
+                    <button mat-raised-button ><h2> Update Work Schedule</h2></button>
+                </div>
+                
+                <form (ngSubmit) = " clickUpdateWork() " >
+            
+                <div class="form-group">
+                    <label><b>Ngay Thang Nam</b></label>
+                    <input type="text" class="form-control" readonly id ="ngay_thang_nam"
+                    [(ngModel)] = "work_scheduless.ngay_thang_nam" name = "ngay_thang_nam">
+                </div>
+
+                <div class="form-group">
+                    <label><b>Thu</b></label>
+                    <input type="text" class="form-control " [readonly] = true id ="thu"
+                    [(ngModel)] = "work_scheduless.thu" name = "thu">
+                </div>
+            
+                <div class="form-group"  >
+                    <label><b>Ca Sang:</b></label>
+                    
+                    <!-- <select  *ngIf="work_scheduless.nhan_vien1 == ''|| work_scheduless.nhan_vien1 == null  "
+                    class="form-select mb20" [(ngModel)]="employees.id" id="nhan_vien1" >
+                        <option selected value="Choose employee">Choose employee</option>
+                        <option  *ngFor="let e of employees" [ngValue]="e.id">{{e.userName}}</option>
+                    </select> -->
+
+                    <!-- <input class="form-control" list="datalistOptions" 
+                        [(ngModel)]="employees.id"
+                        id="nhan_vien1" placeholder="Type to search...">
+                        <datalist id="datalistOptions" *ngFor="let e of employees" >
+                        <option [ngValue]="e.eid"{{e.userName}} >
+                        </datalist> -->
+
+                        <input
+                        *ngIf="work_scheduless.nhan_vien1 ==''|| work_scheduless.nhan_vien1 == null  "
+                        type="text" class="form-control mb20 " id="nhan_vien1"
+                        placeholder="nhan vien 1"
+                        [(ngModel)] = "work_scheduless.nhan_vien1" name = "nhan_vien1" >
+                        
+                    
+                        <input
+                        *ngIf="work_scheduless.nhan_vien2 =='' || work_scheduless.nhan_vien2 == null "
+                            type="text" class="form-control mb20" id="nhan_vien2"
+                            placeholder="nhan vien 2"
+                            [(ngModel)] = "work_scheduless.nhan_vien2" name = "nhan_vien2" >
+
+                </div>
+
+                <div class="form-group">
+                    <label><b>Ca Trua:</b></label>
+                    
+                    <input 
+                    *ngIf="work_scheduless.nhan_vien3 =='' || work_scheduless.nhan_vien3 == null "
+                    type="text" class="form-control mb20"   id="nhan_vien3"
+                    placeholder="nhan vien 3"
+                    [(ngModel)] = "work_scheduless.nhan_vien3" name = "nhan_vien3" >
+
+                    <input
+                    *ngIf="work_scheduless.nhan_vien4 == '' || work_scheduless.nhan_vien4 == null " 
+                    type="text" class="form-control mb20"   id="nhan_vien4"
+                    placeholder="nhan vien 4"
+                    [(ngModel)] = "work_scheduless.nhan_vien4" name = "nhan_vien4" >
+                    
+                </div>
+
+                <div class="form-group">
+                    <label><b>Ca Toi</b> </label>
+                    <input 
+                    *ngIf="work_scheduless.nhan_vien5 == '' || work_scheduless.nhan_vien5 == null  "
+                    type="text" class="form-control mb20"   id="nhan_vien5"
+                    placeholder="nhan vien 5"
+                    [(ngModel)] = "work_scheduless.nhan_vien5" name = "nhan_vien5" >
+
+                    <input
+                    *ngIf="work_scheduless.nhan_vien6 == '' || work_scheduless.nhan_vien6 == null "
+                    type="text" class="form-control mb20"  id="nhan_vien6"
+                    placeholder="nhan vien 6"
+                    [(ngModel)] = "work_scheduless.nhan_vien6" name = "nhan_vien6" >
+                </div>
+                
+                <button class="btn btn-success" type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr >
+                            <th>ID</th>
+                            <th>User Name</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor = "let employee of employees" 
+                            >
+                            <td>    {{employee.id}}</td>
+                            <td> {{employee.userName}} </td>
+                            <td> {{employee.fullName}} 
+                                
+                                <button mat-stroked-button [cdkCopyToClipboard]="employee.fullName">
+                                    <mat-icon>content_copy</mat-icon>
+                                </button>
+                                
+                             </td>
+                            <td> {{employee.email}} </td>
+                            <!-- <td> {{user.authorities[0].authority}} </td> -->
+                        </tr>   
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

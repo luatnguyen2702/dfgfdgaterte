@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+html,
+body{
+    height: 100%;
+}
+body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;}
+a{
+    text-decoration: none;
+}
+.bootstrap-wrapper{
+    display: block;
+   
+    margin-bottom: 30px;
+}
+.container{
+    display: block;
+}
+.home_page{
+    margin-top: 150px;
+}
+.tex-center{
+    text-align: center;
+}
+.full-width{
+    width: 100%;
+}
+.container_footer{
+    width: 100%;
+}
+.footer{
+    display: block;
+    padding: 5px;
+    margin-top: 30px;
+    background-color:rgb(73, 79, 88);
+    color: #fff;
+    z-index: -1;
+   
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: "Roboto", "Helvetica Neue", "sans-serif"; }
+
+.mt20{
+    margin-top: 20px !important;
+}
+.mt10{
+    margin-top: 10px !important;
+}
+.mr0{
+    margin-right: 0 !important;
+}
+.mr15{
+    margin-right: 15px !important;
+}
+.ml20{
+    margin-left: 20px !important;
+}
+.mr20{
+    margin-right: 20px !important;
+}
+.mb20{
+    margin-bottom: 20px !important;
+}
+.ml5{
+    margin-left: 5px !important;
+}
+.mr10{
+    margin-right: 10 !important;
+}
+.mr5{
+    margin-left: 5px !important;
+}
+.ml10{
+    margin-left: 10px !important;
+}
+.mr10{
+    margin-right: 10px !important;
+}
+
+.red_required{
+    color: red;
+}
+
+.w100{
+    width: 100%;
+}

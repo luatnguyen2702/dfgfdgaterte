@@ -1,0 +1,199 @@
+
+<div class="tex-center home_page">
+    <mat-card>
+        <button mat-raised-button><h1> Work Schedule List</h1></button>
+        <table class="table table-striped">
+            <thead>
+                <tr >
+                    <th>ID</th>
+                    <th>Ngay Thang Nam</th>
+                    <th>Thu</th>
+                    <th>Ca Sang</th>
+                    <th>Ca Trua</th>
+                    <th>Ca Toi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let work of work_schedules"  >
+                    <td>    {{work.id}}</td>
+                    <td> {{work.ngay_thang_nam}} </td>
+                    <td> {{work.thu}} </td>
+                    <td> {{work.nhan_vien1}}<b> ,</b><br> {{work.nhan_vien2}} </td>
+                    <td> {{work.nhan_vien3}}<b> ,</b><br> {{work.nhan_vien4}} </td>
+                    <td> {{work.nhan_vien5}}<b> ,</b><br> {{work.nhan_vien6}} </td>
+                    <td>
+                        <button  class="btn btn-warning" (click) ="updateWorkSchedule(work.id)"><i class="fa fa-pencil-square-o" ></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <mat-divider inset></mat-divider>
+        <button class="mt10" mat-raised-button color="primary" [routerLink]="['/user/inventory/'+0]">
+            <mat-icon>warehouse</mat-icon> Inventory
+        </button>
+    </mat-card>
+</div>
+
+<!-- INFORMATION employee -->
+    <div class="tex-center home_page">
+        <mat-card>
+            <button mat-raised-button><h2> Employee Details</h2></button>
+            <div class="page-content page-container" id="page-content">
+                <div class="padding">
+                    <div class="row container d-flex justify-content-center">
+                        <div class="col-xl-10 col-md-12">
+                            <div class="card user-card-full">
+                                <div class="row m-l-0 m-r-0">
+                                    <div class="col-sm-3 bg-c-lite-green user-profile">
+                                        <div class="card-block text-center text-white">
+                                            <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                            <h6 class="f-w-600">ID{{user.id}}: {{user.fullName}}  </h6>
+                                            <p>Nhân Viên</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="card-block">
+                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">INFORMATION</h6>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">User Name:</p>
+                                                    <h6 class="text-muted f-w-400">{{user.userName}}</h6>
+                                                </div>
+            
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Tên:</p>
+                                                    <h6 class="text-muted f-w-400">{{user.firstName}}</h6>
+                                                </div>
+
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Họ:</p>
+                                                    <h6 class="text-muted f-w-400">{{user.lastName}}</h6>
+                                                </div>
+
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Họ và Tên</p>
+                                                    <h6 class="text-muted f-w-400">{{user.fullName}}</h6>
+                                                </div>
+
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Ngày Sinh:</p>
+                                                    <h6 class="text-muted f-w-400">{{user.birthday}}</h6>
+                                                </div>
+
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Giới Tính</p>
+                                                    <h6 class="text-muted f-w-400">{{user.sex}}</h6>
+                                                </div>
+                                                
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Email</p>
+                                                    <h6 class="text-muted f-w-400">{{user.email}}</h6>
+                                                </div>
+
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Số Điện Thoại</p>
+                                                    <h6 class="text-muted f-w-400">{{user.phone}}</h6>
+                                                </div>
+
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">CCCD/CMND:</p>
+                                                    <h6 class="text-muted f-w-400">{{user.indentity_Card}}</h6>
+                                                </div>
+
+                                                <div class="col-sm-5">
+                                                    <p class="m-b-10 f-w-600">Địa Chỉ:</p>
+                                                    <h6 class="text-muted f-w-400">{{user.address}}</h6>
+                                                </div>
+                                                
+                                            </div>
+                                            <p class="b-b-default f-w-600"></p>
+                                            <div class="row">
+                                                <ul class="list_icon">
+                                                    <li class="icon_item facebook"><i class="fa fa-facebook-square"></i></li>
+                                                    <li class="icon_item twitter"><i class="fa fa-twitter" ></i> </li>
+                                                    <li class="icon_item instagram"><i class="fa fa-instagram" ></i></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button mat-raised-button color="primary" class="btn btn-info"><i class="fa fa-pencil-square-o" (click) = "clickOpenUpdate(contentupdate , user)"></i></button>
+         </mat-card>
+    </div>
+
+  <!-- Modal Update Employee -->
+  <ng-template #contentupdate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update Employee</h4>
+      <button type="button" class="btn-close" 
+      data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup] = "editForm" novalidate>
+        
+        <div class="form-group">
+            <label>Tên:</label>
+            <input type="text" class="form-control" 
+             formControlName = "firstName">
+        </div>
+    
+        <div class="form-group">
+            <label>Họ:</label>
+            <input type="text" class="form-control" 
+            formControlName = "lastName" >
+        </div>
+
+        <div class="form-group">
+            <label>Họ và Tên:</label>
+            <input type="text" class="form-control" maxlength="50"
+            formControlName = "fullName" >
+        </div>
+
+        <div class="form-group">
+            <label>Ngày Sinh:</label>
+            <input type="date" class="form-control" 
+            formControlName = "birthday" >
+        </div>
+
+        <div class="form-group">
+            <label>Giới Tính:</label>
+            <input type="text" class="form-control" 
+            formControlName = "sex" >
+        </div>
+
+        <div class="form-group">
+            <label>Số Diện Thoại:</label>
+            <input type="text" class="form-control" 
+            formControlName ="phone" >
+        </div>
+        
+        <div class="form-group">
+            <label>CCCD/CMND:</label>
+            <input type="number" class="form-control" 
+            formControlName ="indentity_Card" >
+        </div>
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="text" class="form-control" 
+            formControlName = "email" >
+        </div>
+    
+        <div class="form-group">
+            <label>Địa Chỉ:</label>
+            <input type="text" class="form-control" 
+            formControlName = "address" >
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit" (click)="onSave()">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>

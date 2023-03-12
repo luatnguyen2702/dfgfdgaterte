@@ -1,0 +1,20 @@
+
+
+<div class="bootstrap-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <mat-card-header class="mt10 mr20 ml20 ">
+                <button mat-stroked-button color="primary" class="mb20"
+                    [routerLink]="['/user']"><mat-icon>arrow_back</mat-icon> Back
+                </button>
+                
+            </mat-card-header>
+            <div class="col-md-2">
+                <app-load-category></app-load-category>
+            </div>
+            <div class="col-md-10">
+               <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

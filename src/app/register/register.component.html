@@ -1,0 +1,103 @@
+
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-6 offset-md-3">
+        <mat-card>
+        <div class="container tex-center">
+          <img src="../../assets/logo_hcmunre1.jpg" alt="logo hcmunre">
+        </div>
+          <h1 class="tex-center">Register Account</h1>
+          <form  (ngSubmit)=" formSubmit() " >
+            <!-- Username -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>User Name</mat-label>
+              <input id="userName" [formControl]="userName"
+              required
+              [(ngModel)]="user.userName"
+              name="userName"
+              matInput placeholder="Enter here" #input>
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-hint >Username is required!</mat-hint>
+              <mat-error *ngIf="userName.invalid">{{getErrorMessageUserName()}}</mat-error>
+              <mat-hint align="end">{{input.value?.length || 0}}/16</mat-hint>
+            </mat-form-field>
+            
+            <!-- Password -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input id="password"
+              required 
+              [formControl]="passwordValidator"
+              [(ngModel)]="user.password"
+              name="password"
+              type="password" matInput [type]="hide ? 'password' : 'text'"
+              placeholder="Enter here"  #inputpassword>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-hint >Password is required!</mat-hint>
+              <mat-error *ngIf="passwordValidator.invalid">{{getErrorMessagePassword()}}</mat-error>
+              <mat-hint align="end">{{inputpassword.value?.length || 0}}/12</mat-hint>
+              <!-- <mat-error *ngIf="password.errors?.minlength">Password must be more than 4 characters</mat-error> -->
+            </mat-form-field>
+
+            <!-- Full Name -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Full Name</mat-label>
+              <input id="fullname"
+              required
+              [(ngModel)]="user.fullName" #inputfullname
+              name="fullName"
+              matInput placeholder="Nguyễn Văn A" [formControl]="fullName">
+              <mat-icon matSuffix>badge</mat-icon>
+              <mat-hint >FullName is required!</mat-hint>
+              <mat-error *ngIf="fullName.invalid">{{getErrorMessageFullName()}}</mat-error>
+              <mat-hint align="end">{{inputfullname.value?.length || 0}}/50</mat-hint>
+            </mat-form-field>
+
+            <!-- Last Name -->
+            <!-- <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input 
+              [(ngModel)]="user.lastName" 
+              name="lastName"
+              matInput placeholder="Enter here">
+              <mat-icon matSuffix>badge</mat-icon>
+            </mat-form-field> -->
+
+             <!-- Phone -->
+             <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Phone number</mat-label>
+              <input id="phone" type="text" [formControl]="numberphone"
+              required [(ngModel)]="user.phone"
+              matInput placeholder="Enter here" minlength="10" #inputphone maxlength="10" size="10" >
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-hint align="end">{{inputphone.value?.length || 0}}/10</mat-hint>
+              <mat-error *ngIf="numberphone.invalid">{{getErrorMessageNumberPhone()}}</mat-error>
+              <mat-hint >Phone is required!</mat-hint>
+            </mat-form-field>
+            
+            <!-- Email -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Email Address</mat-label>
+              <input id="email" type="email" [formControl]="emailValidator" maxlength="50"
+               [(ngModel)]="user.email " required
+              matInput placeholder="Ex. NguyenVanA@gmail.com">
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error *ngIf="emailValidator.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <div *ngIf="edited" class="alert alert-danger box-msg" role="alert">
+              <div id="alert-error" >{{ContentError}}</div>
+            </div>
+            <div class="container text-center" >
+              <button id="id-bt-register"class=" button_form_register" type="submit"  mat-raised-button color="primary" style="margin-right: 30px;">Register</button>
+              <button class=" button_form_register" mat-raised-button ><a routerLink="/login" routerLinkActive="active">Login</a></button>
+            </div>
+            
+          </form>
+      </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

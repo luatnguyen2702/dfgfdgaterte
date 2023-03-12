@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-action-list>
+        <div mat-subheader>Category List</div>
+        <button mat-list-item [routerLink]="['/admin/inventory/'+0]" >
+            <mat-icon mat-list-icon>inventory_2</mat-icon>All Category
+        </button>
+        <button [routerLink]="'/admin/inventory/'+c.id" 
+            mat-list-item *ngFor="let c of categories">
+            <mat-icon mat-list-icon>inventory_2</mat-icon>{{c.categoryName}}
+        </button>
+    </mat-action-list>
+</mat-card>

@@ -1,0 +1,21 @@
+a{
+  text-decoration: none;
+  color: #fff !important;
+}
+a:hover{
+  color: rgb(255, 255, 255);
+  background-color: rgb(194, 194, 189);
+}
+.example-spacer {
+  width: 20%;
+    margin-left: 65%;
+  }
+.btn_username{
+  display: block;
+  margin-right: 15px;
+  width: 20%;
+}
+.link_logout{
+  display: block;
+  width: 20%;
+}

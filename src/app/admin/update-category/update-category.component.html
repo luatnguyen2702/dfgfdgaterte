@@ -1,0 +1,33 @@
+
+
+<mat-card>
+    <div class=" mt20 mb20">
+        <button mat-stroked-button color="primary" class="mt20 mb20"
+        [routerLink]="['/admin/category']"><mat-icon>arrow_back</mat-icon> Back
+        </button>
+    </div>
+
+    <h1>Update Category</h1>
+    <mat-card-content>
+       <div class="bootstrap-wrapper">
+           <div class="row">
+               <div class="col-md-8 offset-md-1">
+                <form *ngIf="category" (ngSubmit)="updateCategory()">
+                    <!-- Product name -->
+                    <mat-form-field class="w100" appearance="fill">
+                        <mat-label>Product Name</mat-label>
+                        <input type="text" required
+                            name="product name" 
+                            matInput placeholder="Enter here"
+                            [(ngModel)]="category.categoryName"
+                        >
+                    </mat-form-field>
+                    <div class="container text-center mt15">
+                        <button mat-raised-button color="primary" type="submit">Update</button>
+                    </div>
+                </form>
+               </div>
+           </div>
+       </div>
+    </mat-card-content>
+</mat-card>

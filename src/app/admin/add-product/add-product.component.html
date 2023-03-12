@@ -1,0 +1,67 @@
+<mat-card>
+    <div class=" mt20 mb20">
+        <button mat-stroked-button color="primary" class="mt20 mb20"
+        [routerLink]="['/admin/inventory/0']"><mat-icon>arrow_back</mat-icon> Back
+        </button>
+    </div>
+    <h1>Add New Product</h1>
+    <mat-card-content>
+       <div class="bootstrap-wrapper">
+           <div class="row">
+               <div class="col-md-8 offset-md-1">
+                <form (ngSubmit)="addProduct()">
+                    <!-- Product name -->
+                    <mat-form-field class="w100" appearance="fill">
+                        <mat-label>Product Name</mat-label>
+                        <input type="text" required [formControl]="products" #inputproductname 
+                            name="product name" 
+                            matInput placeholder="Enter here"
+                            [(ngModel)]="productData.productName"
+                        >
+                        <mat-hint >Product Name is required!</mat-hint>
+                        <mat-hint align="end">{{inputproductname.value?.length || 0}}/50</mat-hint>
+                        <mat-error *ngIf="products.invalid">{{getErrorMessageProduct()}}</mat-error>
+                    </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- quantity -->
+                       <mat-form-field class="w100" appearance="fill">
+                           <mat-label>Quantity </mat-label>
+                           <input type="number" required
+                               name="quantity " 
+                               matInput placeholder="Enter here"
+                               [(ngModel)]="productData.quantity"
+                           >
+                       </mat-form-field>
+                       </div>
+                      <div class="col-md-6">
+                            <!-- Price -->
+                       <mat-form-field class="w100" appearance="fill">
+                           <mat-label>Price </mat-label>
+                           <input type="number" required 
+                               name="price " 
+                               matInput placeholder="Enter here"
+                               [(ngModel)]="productData.price"
+                           >
+                       </mat-form-field>
+                      </div>
+                    </div>
+                    <!-- category select -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Category Product</mat-label>
+                        <mat-select name="category"   [(ngModel)]="productData.category.id">
+                          <mat-option *ngFor="let c of categories" [value]="c.id" >
+                           {{c.categoryName}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <div class="container text-center mt15">
+                        <button mat-raised-button color="primary" type="submit">Add</button>
+                    </div>
+                </form>
+               </div>
+           </div>
+       </div>
+    </mat-card-content>
+</mat-card>
+<!-- {{productData | json}} -->

@@ -1,0 +1,30 @@
+<mat-card>
+    <div class=" m-t-40 mb20">
+        <button mat-stroked-button color="primary" class="mt20 mb20"
+        [routerLink]="['/admin/category']"><mat-icon>arrow_back</mat-icon> Back
+        </button>
+      </div>
+    <h1>Add New Category</h1>
+    <mat-card-content>
+       <div class="bootstrap-wrapper">
+           <div class="row">
+               <div class="col-md-8 offset-md-1">
+                <form (ngSubmit)="formSubmit()">
+                    <mat-form-field class="w100" appearance="outline">
+                        <mat-label>Category Name</mat-label>
+                        <input type="text" required
+                            name="category name" 
+                            matInput placeholder="Enter here"
+                            [(ngModel)]="category.categoryName"
+                        >
+                    </mat-form-field>
+                    
+                    <div class="container text-center mt15">
+                        <button mat-raised-button color="primary">Add</button>
+                    </div>
+                </form>
+               </div>
+           </div>
+       </div>
+    </mat-card-content>
+</mat-card>

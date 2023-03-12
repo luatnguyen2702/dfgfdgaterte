@@ -1,0 +1,226 @@
+<div class="container">
+  <div class=" m-t-40 mb20">
+    <button mat-stroked-button color="primary" class="mt20 mb20"
+    [routerLink]="['/admin']"><mat-icon>arrow_back</mat-icon> Back
+    </button>
+  </div>
+   
+    <div class="container text-center mt20 mb20">
+      <button mat-stroked-button color="primary"><h1> Work Schedule List</h1></button>
+  </div>
+  
+    
+    <div class="row">
+        <!-- <div id="custom-search-input">
+            <div class="input-group col-md-12" style="text-align: center">
+                <input type="text" class="search-query form-control" placeholder="Search With Shift" [(ngModel)] = "ca_lam_viec" name = "ca_lam_viec" />
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button" >
+                        <span ><i class="fa fa-search"></i></span>
+                    </button>
+                </span>
+            </div>
+        </div> -->
+    
+    </div>
+    <div class="col-6 btn-add" >
+        <button class=" btn btn-primary" (click)= " openCreate(contentCreate) " >
+            <a class="icon_user" ><i class="fa fa-calendar"> New Work Schedule</i></a>
+        </button>
+       
+    </div>
+<table class="table table-striped">
+    <thead>
+        <tr >
+            <th>ID</th>
+            <th>Ngày/Tháng/Năm</th>
+            <th>Thứ</th>
+            <th>Ca Sáng</th>
+            <th>Ca Trưa</th>
+            <th>Ca Tối</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let work of work_schedules | paginate:{
+            itemsPerPage: pageSize,
+            currentPage: page,
+            totalItems: count };
+            let i = index
+            " 
+            [class.active]="i == currentIndex"
+             >
+            <td> {{work.id}}</td>
+            <td> {{work.ngay_thang_nam}} </td>
+            <td> {{work.thu}} </td>
+            <td> {{work.nhan_vien1}}<b> ,</b><br> {{work.nhan_vien2}} </td>
+            <td> {{work.nhan_vien3}}<b> ,</b><br> {{work.nhan_vien4}} </td>
+            <td> {{work.nhan_vien5}}<b> ,</b><br> {{work.nhan_vien6}} </td>
+            <td>
+                <!-- <button  class="btn btn-info"><i class="fa fa-eye" ></i></button> -->
+                <button  class="btn btn-info" (click) = "clickOpenUpdate(contentupdate , work)"><i class="fa fa-pencil-square-o"  ></i></button>
+                <button  class="btn btn-danger" (click)="clickOpenDelete(contentDelete, work)"><i class="fa fa-trash-o" ></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      [responsive]="true"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+  </div>
+
+  <div class="mt-3">
+    Items per Page:
+    <select (change)="handlePageSizeChange($event)">
+      <option *ngFor="let size of pageSizes" [ngValue]="size">
+        {{ size }}
+      </option>
+    </select>
+  </div>
+</div>
+
+ <!-- Create Work Schedule -->
+ <ng-template #contentCreate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Work Schedule</h4>
+      <button type="button" class="btn-close" 
+      data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm" (ngSubmit) = " onSubmit(f)" novalidate >
+        
+        <div class="form-group">
+            <label>Ngay Thang Nam:</label>
+            <input type="date" class="form-control date" id ="ngay_thang_nam" 
+            [(ngModel)] = "work_scheduless.ngay_thang_nam" name = "ngay_thang_nam" [formControl]="date">
+            <div class="red_required" *ngIf="date.invalid">{{getErrorMessageDate()}}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Thu:</label>
+          <input type="text" class="form-control" id ="thu"
+          [(ngModel)] = "work_scheduless.thu" name = "thu">
+      </div>
+
+        <div class="form-group">
+            <label>Ca Sang:</label>
+            <input type="text" class="form-control" id ="nhan_vien1"
+            [(ngModel)] = "work_scheduless.nhan_vien1" name = "nhan_vien1">
+            <br>
+            <input type="text" class="form-control" id ="nhan_vien2"
+            [(ngModel)] = "work_scheduless.nhan_vien2" name = "nhan_vien2">
+        </div>
+
+        <div class="form-group">
+            <label>Ca Trua:</label>
+            <input type="text" class="form-control" id ="ca_trua"
+            [(ngModel)] = "work_scheduless.nhan_vien3" name = "nhan_vien3">
+            <br>
+            <input type="text" class="form-control" id ="ca_trua"
+            [(ngModel)] = "work_scheduless.nhan_vien4" name = "nhan_vien4">
+        </div>
+    
+        <div class="form-group">
+            <label>Ca Toi:</label>
+            <input type="text" class="form-control" id="nhan_vien5"
+            [(ngModel)] = "work_scheduless.nhan_vien5" name = "nhan_vien5" >
+            <br>
+            <input type="text" class="form-control" id="nhan_vien6"
+            [(ngModel)] = "work_scheduless.nhan_vien6" name = "nhan_vien6" >
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit" [disabled]="!date.valid" (click)="modal.close('Save click')">Submit</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  
+   <!-- Update Work Schedule -->
+<ng-template #contentupdate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update Work Schedule</h4>
+      <button type="button" class="btn-close" 
+      data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup] = "editForm" novalidate>
+        
+        <div class="form-group">
+            <label><b> Ngay Thang Nam:</b></label>
+            <input type="date" class="form-control" 
+             formControlName = "ngay_thang_nam">
+        </div>
+
+        <div class="form-group">
+          <label><b>Thu:</b></label>
+          <input type="text" class="form-control" 
+           formControlName = "thu">
+      </div>
+
+        <div class="form-group mb20">
+          <h3><b>Ca Sang:</b></h3>
+            <label>Nhan Vien 1:</label>
+            <input type="text" class="form-control" 
+             formControlName = "nhan_vien1">
+
+            <label>Nhan Vien 2:</label>
+            <input type="text" class="form-control" 
+            formControlName = "nhan_vien2">
+        </div>
+
+        <div class="form-group mb20">
+          <h3><b>Ca Trua:</b></h3>
+            <label>Nhan Vien 3:</label>
+            <input type="text" class="form-control" 
+            formControlName = "nhan_vien3" >
+
+            <label>Nhan Vien 4:</label>
+          <input type="text" class="form-control" 
+          formControlName = "nhan_vien4" >
+        </div>
+
+      <div class="form-group mb20">
+        <h3><b>Ca Toi:</b></h3>
+        <label>Nhan Vien 5:</label>
+        <input type="text" class="form-control" 
+        formControlName = "nhan_vien5" >
+
+        <label> Nhan Vien 6:</label>
+        <input type="text" class="form-control" 
+        formControlName = "nhan_vien6" >
+      </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit" (click)="onSave()">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+
+  <!-- delete work schedule -->
+  <ng-template #contentDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirm Delete Work Schedule</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <h6 class="text-center">Bạn có chắc muốn xóa lịch làm việc này không? </h6>
+    </div>
+    <div class="modal-footer">
+        <button data-dismiss="modal" class="btn btn-danger" (click) = "deleteWorkSchedule()">Yes, Delete!</button> 
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    </div>
+  </ng-template>
+
+
+

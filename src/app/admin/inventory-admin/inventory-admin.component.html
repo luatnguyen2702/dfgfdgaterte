@@ -1,0 +1,23 @@
+<div class="bootstrap-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <mat-card-header class="mt10 mr20 ml20 ">
+                <button mat-stroked-button color="primary" class="mb20"
+                    [routerLink]="['/admin']"><mat-icon>arrow_back</mat-icon> Back
+                </button>
+            </mat-card-header>
+            <div class="col-md-3">
+                <app-load-category-admin></app-load-category-admin>
+            </div>
+            <div class="col-md-9">
+                <mat-card  class="mt20" >
+                    <h1 >Products</h1>
+                    <div class="container text-center mt20">
+                        <button mat-raised-button color="primary" [routerLink]="['/admin/add-product']" routerLinkActive="router-link-active">Add New Product</button>
+                    </div>
+                </mat-card>
+               <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

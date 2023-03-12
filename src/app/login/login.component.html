@@ -1,0 +1,51 @@
+
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-6 offset-md-3">
+        <mat-card>
+          <div class="container tex-center">
+            <img src="../../assets/logo_hcmunre1.jpg" alt="logo hcmunre">
+          </div>
+            <h1 class="tex-center">Login Account</h1>
+            <!-- {{loginData | json}} -->
+            <form (ngSubmit)="formSubmit()">
+            <!-- Username -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>User Name</mat-label>
+              <input [formControl]="userName"
+              [(ngModel)]="loginData.userName"
+              name="username"
+              required
+              matInput placeholder="Enter here" #input minlength="5" maxlength="16" size="16"> 
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-hint >Username is required!</mat-hint>
+              <mat-hint align="end">{{input.value?.length || 0}}/16</mat-hint>
+              <mat-error *ngIf="userName.invalid">{{getErrorMessageUserName()}}</mat-error>
+            </mat-form-field>
+            <!-- Password -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input [formControl]="passwordValidator"
+              [(ngModel)]="loginData.password" required
+              type="password" matInput [type]="hide ? 'password' : 'text'"
+              placeholder="Enter here"minlength="4" #inputpassword maxlength="12" size="12">
+              
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-hint >Password is required!</mat-hint>
+              <mat-error *ngIf="passwordValidator.invalid">{{getErrorMessagePassword()}}</mat-error>
+              <mat-hint align="end">{{inputpassword.value?.length || 0}}/12</mat-hint>
+            </mat-form-field>
+
+              <div class="container text-center">
+                <button type="submit"mat-raised-button color="primary" >Login</button>
+                <button mat-raised-button  style="margin-left: 30px;"><a routerLink="/register" routerLinkActive="active">Register</a></button>
+              </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
