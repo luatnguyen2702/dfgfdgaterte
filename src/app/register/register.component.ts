@@ -4,9 +4,9 @@ import { UserService } from '../service/user.service';
 import Swal from 'sweetalert2'
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -25,26 +25,26 @@ export class RegisterComponent implements OnInit {
   public edited = false;
   hide = true;
   public errorEmail = false;
-  registerForm: FormGroup = new FormGroup({
+  registerForm: UntypedFormGroup = new UntypedFormGroup({
   });
   // ,UsernameValidator.cannotContainSpace
-  userName = new FormControl('',[Validators.required,
+  userName = new UntypedFormControl('',[Validators.required,
       Validators.pattern('^[a-z0-9_-]{5,16}$')]);
 
-    numberphone = new FormControl('', [Validators.required,
+    numberphone = new UntypedFormControl('', [Validators.required,
         Validators.pattern('(\\+84|0)+(3[2-9]|5[6|8|9]|9\\d(?!5)|8[1-9]|7[0|6-9])+([0-9]{7})\\b')]);
           
-   fullName = new FormControl ('',[Validators.required,Validators.pattern(/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]{0,50}$/)]);
+   fullName = new UntypedFormControl ('',[Validators.required,Validators.pattern(/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]{0,50}$/)]);
 
   
-  emailValidator = new FormControl('', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$")]);
+  emailValidator = new UntypedFormControl('', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$")]);
 
-  passwordValidator = new FormControl('',[Validators.required,
+  passwordValidator = new UntypedFormControl('',[Validators.required,
       Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{4,12}$')]);
 
   constructor(private userService: UserService,
     private snack:MatSnackBar,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     ) {     }
 
   public user ={

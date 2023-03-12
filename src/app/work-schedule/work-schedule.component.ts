@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkSchedule } from '../service/work-schedule';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,11 +26,11 @@ export class WorkScheduleComponent implements OnInit {
   data!: any;
   params:any;
   closeResult!: string;
-  editForm! : FormGroup;
-  detailsForm! : FormGroup;
+  editForm! : UntypedFormGroup;
+  detailsForm! : UntypedFormGroup;
   deleteId: any;
 
-  deleteForm!:FormGroup;
+  deleteForm!:UntypedFormGroup;
   currentIndex = -1;
   page = 1;
   count = 0;
@@ -38,7 +38,7 @@ export class WorkScheduleComponent implements OnInit {
   pageSizes = [5, 8, 12];
   message = '';
 
-  date = new FormControl('',[Validators.required, 
+  date = new UntypedFormControl('',[Validators.required, 
     Validators.pattern(/^\d{4}-(02-(0[1-9]|[12][0-9])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))$/)]);
 
 
@@ -46,7 +46,7 @@ export class WorkScheduleComponent implements OnInit {
     private modalService:NgbModal,
     private workService:WorkserviceService,
     private route:ActivatedRoute,
-    private fb : FormBuilder,
+    private fb : UntypedFormBuilder,
     private httpClient: HttpClient,) { }
 
   ngOnInit(): void {

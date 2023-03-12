@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -36,8 +36,8 @@ export class UserDashboardComponent implements OnInit {
 
   data!: any;
   userName = null;
-  detailsForm! : FormGroup;
-  editForm! : FormGroup;
+  detailsForm! : UntypedFormGroup;
+  editForm! : UntypedFormGroup;
   
   
   constructor(
@@ -46,7 +46,7 @@ export class UserDashboardComponent implements OnInit {
     private loginService:LoginService,
     private workService:WorkserviceService,
     private modalService:NgbModal,
-    private fb : FormBuilder,
+    private fb : UntypedFormBuilder,
     private httpClient: HttpClient,
    
     ) { }

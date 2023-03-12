@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from '../service/login.service';
@@ -11,16 +11,16 @@ import { LoginService } from '../service/login.service';
 })
 export class LoginComponent implements OnInit {
   hide = true;
-  registerForm: FormGroup = new FormGroup({
+  registerForm: UntypedFormGroup = new UntypedFormGroup({
   });
   isLoggedIn() {
     throw new Error('Phương thức không thực hiện.');
   }
 
-  userName = new FormControl('',[Validators.required,
+  userName = new UntypedFormControl('',[Validators.required,
     Validators.pattern('^[A-Za-z0-9_-]{5,16}$')]);
 
-    passwordValidator = new FormControl('',[Validators.required,
+    passwordValidator = new UntypedFormControl('',[Validators.required,
       Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{4,12}$')]);
   loginData={
     userName:'',
